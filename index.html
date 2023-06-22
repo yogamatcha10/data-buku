@@ -10,43 +10,49 @@
 <body class="bg-gray-100">
   <div class="container mx-auto p-8 user-login">
     <h1 class="text-4xl font-bold mb-8 text-black">Pendataan Buku</h1>
-    <div class="flex items-center mb-4 user-box">
+    <div class="items-center mb-4 user-box ">
       <label for="judul" class="mr-2 text-black">Judul Buku :</label>
       <input
         type="text"
-        id="judul"
-        class="px-4 py-2 border border-gray-300 mr-8 rounded"
-      /><br>
+        id="judul" 
+        class="px-4 py-2 border border-gray-300 mr-8 rounded w-full"
+      /></div>
+      <div class="items-center mb-4 user-box ">
       <label for="penulis" class="mr-2 text-black">Penulis Buku :</label>
       <input
         type="text"
         id="penulis"
-        class="px-4 py-2 border border-gray-300 mr-8 rounded"
-      /><br>
+        class="px-4 py-2 border border-gray-300 mr-8 rounded w-full"
+      />
+    </div>
+    <div class="items-center mb-4 user-box ">
       <label for="penerbit" class="mr-2 text-black">Penerbit Buku :</label>
       <input
         type="text"
         id="penerbit"
-        class="px-4 py-2 border border-gray-300 mr-8 rounded"
-      /><br>
+        class="px-4 py-2 border border-gray-300 mr-8 rounded w-full"
+      /></div>
+      <div class="items-center mb-4 user-box ">
       <label for="tahun_terbit" class="mr-2 text-black">Tahun Terbit Buku :</label>
       <input
         type="number"
         id="tahun_terbit"
-        class="px-4 py-2 border border-gray-300 mr-8 rounded"
-      /><br>
+        class="px-4 py-2 border border-gray-300 mr-8 rounded w-full"
+      /></div>
+      <div class="items-center mb-4 user-box ">
       <label for="harga" class="mr-2 text-black">Harga Buku :</label>
       <input
         type="number"
         id="harga"
-        class="px-4 py-2 border border-gray-300z mr-8 rounded"
-      /><br>
-      <label for="stok" class="mr-2 text-black">Stok Buku :</label>
+        class="px-4 py-2 border border-gray-300z mr-8 rounded w-full"
+      /></div>
+      <div class="items-center mb-4 user-box ">
+      <label for="stok" class="mr-2 text-black w-10\/12">Stok Buku :</label>
       <input
         type="number"
         id="stok"
-        class="px-4 py-2 border border-gray-300 mr-8 rounded"
-      /><br>
+        class="px-4 py-2 border border-gray-300 mr-8 rounded w-full"
+      /></div>
       <button
         type="button"
         id="button"
@@ -58,7 +64,7 @@
     </div>
   </div>
   <div class="container mx-auto">
-    <table class="w-full border border-gray-300">
+    <table class="w-full border border-gray-300 mb-10">
       <thead>
         <tr>
           <th class="py-2 mb-2 bg-gray-200">No</th>
@@ -71,7 +77,7 @@
           <th class="py-2 mb-2 bg-gray-200">Aksi</th>
         </tr>
       </thead>
-      <tbody id="result" class="text-center"></tbody>
+      <tbody id="result" class="text-center mb-9"></tbody>
     </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
