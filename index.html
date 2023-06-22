@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <title>PENDATAAN BUKU | AYF</title>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-8 user-login">
+    <h1 class="text-4xl font-bold mb-8 text-black">Pendataan Buku</h1>
+    <div class="flex items-center mb-4 user-box">
+      <label for="judul" class="mr-2 text-black">Judul Buku :</label>
+      <input
+        type="text"
+        id="judul"
+        class="px-4 py-2 border border-gray-300 mr-8 rounded"
+      /><br>
+      <label for="penulis" class="mr-2 text-black">Penulis Buku :</label>
+      <input
+        type="text"
+        id="penulis"
+        class="px-4 py-2 border border-gray-300 mr-8 rounded"
+      /><br>
+      <label for="penerbit" class="mr-2 text-black">Penerbit Buku :</label>
+      <input
+        type="text"
+        id="penerbit"
+        class="px-4 py-2 border border-gray-300 mr-8 rounded"
+      /><br>
+      <label for="tahun_terbit" class="mr-2 text-black">Tahun Terbit Buku :</label>
+      <input
+        type="number"
+        id="tahun_terbit"
+        class="px-4 py-2 border border-gray-300 mr-8 rounded"
+      /><br>
+      <label for="harga" class="mr-2 text-black">Harga Buku :</label>
+      <input
+        type="number"
+        id="harga"
+        class="px-4 py-2 border border-gray-300z mr-8 rounded"
+      /><br>
+      <label for="stok" class="mr-2 text-black">Stok Buku :</label>
+      <input
+        type="number"
+        id="stok"
+        class="px-4 py-2 border border-gray-300 mr-8 rounded"
+      /><br>
+      <button
+        type="button"
+        id="button"
+        class="rounded-lg bg-green-500 text-white px-4 py-2"
+        onclick="saveData()"
+      >
+        SIMPAN
+      </button>
+    </div>
+  </div>
+  <div class="container mx-auto">
+    <table class="w-full border border-gray-300">
+      <thead>
+        <tr>
+          <th class="py-2 mb-2 bg-gray-200">No</th>
+          <th class="py-2 mb-2 bg-gray-200">Judul</th>
+          <th class="py-2 mb-2 bg-gray-200">Penulis</th>
+          <th class="py-2 mb-2 bg-gray-200">Penerbit</th>
+          <th class="py-2 mb-2 bg-gray-200">Tahun terbit</th>
+          <th class="py-2 mb-2 bg-gray-200">Harga</th>
+          <th class="py-2 mb-2 bg-gray-200">Stok</th>
+          <th class="py-2 mb-2 bg-gray-200">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="result" class="text-center"></tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // CRUD EDIT
+    const editData = (id, judul, penulis, penerbit, tahun_terbit, harga, stok) => {
+      document.getElementById("judul").value = judul;
+      document.getElementById("penulis").value = penulis;
+      document.getElementById("penerbit").value = penerbit;
+      document.getElementById("tahun_terbit").value = tahun_terbit;
+      document.getElementById("harga").value = harga;
+      document.getElementById("stok").value = stok;
+      document.getElementById("button").innerText = "Ubah";
+      document
+        .getElementById("button")
+        .setAttribute("onclick", `updateData(${id})`);
+    };
+
+    // UPDATE
+    const updateData = async (id) => {
+      let judulForm = document.getElementById("judul").value;
+      let penulisForm = document.getElementById("penulis").value;
+      let penerbitForm = document.getElementById("penerbit").value;
+      let tahun_terbitForm = document.getElementById("tahun_terbit").value;
+      let hargaForm = document.getElementById("harga").value;
+      let stokForm = document.getElementById("stok").value;
+      let text = "Yakin akan mengubah data?";
+      if (confirm(text) == true) {
+        await axios
+          .patch(
+            `http://103.163.110.11:3031/books/${id}`,
+            {
+              judul: judulForm,
+              penulis: penulisForm,
+              penerbit: penerbitForm,
+              tahun_terbit: tahun_terbitForm,
+              harga: hargaForm,
+              stok: stokForm,
+            }
+          )
+          .then((response) => {
+            getData();
+            document.getElementById("judul").value = "";
+            document.getElementById("penulis").value = "";
+            document.getElementById("penerbit").value = "";
+            document.getElementById("tahun_terbit").value = "";
+            document.getElementById("harga").value = "";
+            document.getElementById("stok").value = "";
+            console.log("Data berhasil diupdate");
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    };
+
+    // CRUD DELETE
+    const deleteData = async (id) => {
+      let text = "Yakin akan menghapus data?";
+      if (confirm(text) == true) {
+        await axios
+          .delete(
+            `http://103.163.110.11:3031/books/${id}`
+          )
+          .then((response) => {
+            getData();
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
+    };
+
+    // CRUD SAVE
+    const saveData = async () => {
+      let judulForm = document.getElementById("judul").value;
+      let penulisForm = document.getElementById("penulis").value;
+      let penerbitForm = document.getElementById("penerbit").value;
+      let tahun_terbitForm = document.getElementById("tahun_terbit").value;
+      let hargaForm = document.getElementById("harga").value;
+      let stokForm = document.getElementById("stok").value;
+      await axios
+        .post(`http://103.163.110.11:3031/books`, {
+          judul: judulForm,
+          penulis: penulisForm,
+          penerbit: penerbitForm,
+          tahun_terbit: tahun_terbitForm,
+          harga: hargaForm,
+          stok: stokForm,
+        })
+        .then((response) => {
+          getData();
+          document.getElementById("judul").value = "";
+          document.getElementById("penulis").value = "";
+          document.getElementById("penerbit").value = "";
+          document.getElementById("tahun_terbit").value = "";
+          document.getElementById("harga").value = "";
+          document.getElementById("stok").value = "";
+          console.log("berhasil");
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    };
+
+    //   GET DATA
+    const getData = async () => {
+      await axios
+        .get(`http://103.163.110.11:3031/books`)
+        .then((response) => {
+          let bucket = ``;
+          let books = response.data;
+          for (let i = 0; i < books.length; i++) {
+            bucket += `
+              <tr>
+                <td>${i + 1}</td>
+                <td>${books[i].judul}</td>
+                <td>${books[i].penulis}</td>
+                <td>${books[i].penerbit}</td>
+                <td>${books[i].tahun_terbit}</td>
+                <td>${books[i].harga}</td>
+                <td>${books[i].stok}</td>
+                <td >
+                  <button type="button" class="rounded-lg bg-blue-500 text-white px-4 py-2 mb-2" onclick="editData('${
+                    books[i].id
+                  }','${books[i].judul}','${books[i].penulis}','${
+              books[i].penerbit
+            }','${books[i].tahun_terbit}','${books[i].harga}','${books[i].stok}')">Edit</button>
+                  <button type="button" class="rounded-lg bg-red-500 text-white px-4 py-2" onclick="deleteData(${
+                    books[i].id
+                  })">Delete</button>
+                </td>
+
+              </tr>
+              `;
+          }
+          document.getElementById("result").innerHTML = bucket;
+        });
+    };
+    getData();
+  </script>
+</html>
